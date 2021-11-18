@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="london_gb">London ,GB</string>
+    <string name="_20_41_c">20.41^C</string>
+    <string name="broken_clouds">broken clouds</string>
+    <string name="details">Details:</string>
+    <string name="humidity">Humidity :</string>
+    <string name="max_temp">Max. Temp :</string>
+    <string name="min_temp">Min. Temp :</string>
+    <string name="pressure">Pressure:</string>
+    <string name="wind_speed">Wind Speed:</string>
+    <string name="iconweather">iconWeather</string>
 </resources>
