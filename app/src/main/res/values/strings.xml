@@ -10,4 +10,5 @@
     <string name="pressure">Pressure:</string>
     <string name="wind_speed">Wind Speed:</string>
     <string name="iconweather">iconWeather</string>
+    <string name="enter_city_name">Enter city name</string>
 </resources>
