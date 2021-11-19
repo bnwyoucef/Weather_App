@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private Double lat, lon;
+    private OpenWeather sendResponse;
+    public static final String SEND_BUNDLE = "bundle";
+    public static final String SEND_INTENT = "intent";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
         cityName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SearchNameActivity.class));
+                Intent intent = new Intent(MainActivity.this, SearchNameActivity.class);
+                intent.putExtra(SEND_INTENT, sendResponse);
+                startActivity(intent);
             }
         });
 
@@ -90,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
         list.enqueue(new Callback<OpenWeather>() {
             @Override
             public void onResponse(Call<OpenWeather> call, Response<OpenWeather> response) {
-                cityName.setText(response.body().getName());
+                sendResponse = response.body();
+                cityName.setText(response.body().getName() + " ," +response.body().getSys().getCountry());
                 weatherDegree.setText(String.valueOf(response.body().getMain().getTemp()) + "°C");
                 weatherDescription.setText(response.body().getWeather().get(0).getDescription());
                 humidity.setText(String.valueOf(response.body().getMain().getHumidity()));
@@ -100,9 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 windSpeed.setText(String.valueOf(response.body().getWind().getSpeed()));
                 String iconNumber = response.body().getWeather().get(0).getIcon();
                 Glide.with(MainActivity.this)
-                        .load("http://openweathermap.org/img/wn/" + iconNumber +"@2x.png")
-                        .into(weatherIcon);
-                Picasso.get().load("http://openweathermap.org/img/wn/" + iconNumber +"@2x.png")
+                        .load("https://openweathermap.org/img/wn/" + iconNumber +"@2x.png")
                         .into(weatherIcon);
             }
 

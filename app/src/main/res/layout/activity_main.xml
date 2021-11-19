@@ -29,7 +29,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:id="@+id/weatherIcon"
-            android:src="@drawable/ic_baseline_location_city_24"
             android:contentDescription="@string/iconweather" />
         <LinearLayout
             android:layout_width="wrap_content"

@@ -1,12 +1,15 @@
 
 package com.example.weatherapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class OpenWeather {
+public class OpenWeather implements Parcelable {
 
     @SerializedName("coord")
     @Expose
@@ -47,6 +50,48 @@ public class OpenWeather {
     @SerializedName("cod")
     @Expose
     private Integer cod;
+
+    protected OpenWeather(Parcel in) {
+        base = in.readString();
+        if (in.readByte() == 0) {
+            visibility = null;
+        } else {
+            visibility = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            dt = null;
+        } else {
+            dt = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            timezone = null;
+        } else {
+            timezone = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        name = in.readString();
+        if (in.readByte() == 0) {
+            cod = null;
+        } else {
+            cod = in.readInt();
+        }
+    }
+
+    public static final Creator<OpenWeather> CREATOR = new Creator<OpenWeather>() {
+        @Override
+        public OpenWeather createFromParcel(Parcel in) {
+            return new OpenWeather(in);
+        }
+
+        @Override
+        public OpenWeather[] newArray(int size) {
+            return new OpenWeather[size];
+        }
+    };
 
     public Coord getCoord() {
         return coord;
@@ -152,4 +197,44 @@ public class OpenWeather {
         this.cod = cod;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(base);
+        if (visibility == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(visibility);
+        }
+        if (dt == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(dt);
+        }
+        if (timezone == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(timezone);
+        }
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeString(name);
+        if (cod == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(cod);
+        }
+    }
 }
