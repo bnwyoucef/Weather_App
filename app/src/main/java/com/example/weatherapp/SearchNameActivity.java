@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,16 +48,21 @@ public class SearchNameActivity extends AppCompatActivity {
     private void receiveData() {
         Intent intent = getIntent();
         if (intent != null) {
-            OpenWeather openWeather = intent.getParcelableExtra(SEND_INTENT);
+            String data = intent.getStringExtra(SEND_INTENT);
+            Gson gson = new Gson();
+            OpenWeather openWeather = gson.fromJson(data, OpenWeather.class);
             if (openWeather != null) {
                 city.setText(openWeather.getName() + " ," + openWeather.getSys().getCountry());
                 weatherDegree.setText(String.valueOf(openWeather.getMain().getTemp()) + "°C");
                 weatherDescription.setText(String.valueOf(openWeather.getWeather().get(0).getDescription()));
-                humidity.setText(String.valueOf(openWeather.getMain().getHumidity()));
+                humidity.setText(String.valueOf(openWeather.getMain().getHumidity()) + "%");
                 maxTemp.setText(String.valueOf(openWeather.getMain().getTempMax()) + "°C");
                 minTemp.setText(String.valueOf(openWeather.getMain().getTempMin()) + "°C");
                 windSpeed.setText(String.valueOf(openWeather.getWind().getSpeed()));
                 String iconNumber = openWeather.getWeather().get(0).getIcon();
+                Glide.with(SearchNameActivity.this)
+                        .load("https://openweathermap.org/img/wn/" + iconNumber + "@2x.png")
+                        .into(weatherIcon);
             }
         }
     }
@@ -71,13 +77,12 @@ public class SearchNameActivity extends AppCompatActivity {
                     city.setText(response.body().getName() + " ," + response.body().getSys().getCountry());
                     weatherDegree.setText(String.valueOf(response.body().getMain().getTemp()) + "°C");
                     weatherDescription.setText(String.valueOf(response.body().getWeather().get(0).getDescription()));
-                    humidity.setText(String.valueOf(response.body().getMain().getHumidity()));
+                    humidity.setText(String.valueOf(response.body().getMain().getHumidity()) + "%");
                     maxTemp.setText(String.valueOf(response.body().getMain().getTempMax()) + "°C");
                     minTemp.setText(String.valueOf(response.body().getMain().getTempMin()) + "°C");
                     windSpeed.setText(String.valueOf(response.body().getWind().getSpeed()));
                     String iconNumber = response.body().getWeather().get(0).getIcon();
                     Glide.with(SearchNameActivity.this)
-                            .asBitmap()
                             .load("https://openweathermap.org/img/wn/" + iconNumber + "@2x.png")
                             .into(weatherIcon);
                 }

@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,11 +41,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         intiViews();
-        cityName.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SearchNameActivity.class);
-                intent.putExtra(SEND_INTENT, sendResponse);
+                Gson gson = new Gson();
+                String data = gson.toJson(sendResponse);
+                intent.putExtra(SEND_INTENT, data);
                 startActivity(intent);
             }
         });
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 cityName.setText(response.body().getName() + " ," +response.body().getSys().getCountry());
                 weatherDegree.setText(String.valueOf(response.body().getMain().getTemp()) + "°C");
                 weatherDescription.setText(response.body().getWeather().get(0).getDescription());
-                humidity.setText(String.valueOf(response.body().getMain().getHumidity()));
+                humidity.setText(String.valueOf(response.body().getMain().getHumidity()) + "%");
                 maxTemp.setText(String.valueOf(String.valueOf(response.body().getMain().getTempMax())) + "°C");
                 minTemp.setText(String.valueOf(String.valueOf(response.body().getMain().getTempMin())) + "°C");
                 pressure.setText(String.valueOf(response.body().getMain().getPressure()));
