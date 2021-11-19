@@ -41,17 +41,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         intiViews();
+        /**
+         * get weather by city name
+         * **/
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SearchNameActivity.class);
+                //convert the response object to json and send it to searchActivity
                 Gson gson = new Gson();
                 String data = gson.toJson(sendResponse);
                 intent.putExtra(SEND_INTENT, data);
                 startActivity(intent);
             }
         });
-
+        /**
+         * get the location
+         * **/
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -61,10 +67,13 @@ public class MainActivity extends AppCompatActivity {
                 getWeatherData();
             }
         };
-
+        /**
+         * ask for permission to get the location from the phone
+         * **/
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, 1);
         }else {
+            //if the permission granted get it from the gps
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 50, locationListener);
         }
     }
@@ -91,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton = findViewById(R.id.floatingActionBtn);
     }
 
+    /**
+     * get the weather data from the website and display it in the layout
+     * **/
     private void getWeatherData() {
         RetrofitApi retrofitApi = RetrofitClass.getInstance().create(RetrofitApi.class);
         Call<OpenWeather> list = retrofitApi.getWeatherStatusByCoordination(lat, lon);
@@ -104,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 humidity.setText(String.valueOf(response.body().getMain().getHumidity()) + "%");
                 maxTemp.setText(String.valueOf(String.valueOf(response.body().getMain().getTempMax())) + "°C");
                 minTemp.setText(String.valueOf(String.valueOf(response.body().getMain().getTempMin())) + "°C");
-                pressure.setText(String.valueOf(response.body().getMain().getPressure()));
-                windSpeed.setText(String.valueOf(response.body().getWind().getSpeed()));
+                pressure.setText(String.valueOf(response.body().getMain().getPressure()) + " mbar");
+                windSpeed.setText(String.valueOf(response.body().getWind().getSpeed()) + " km/h");
                 String iconNumber = response.body().getWeather().get(0).getIcon();
                 Glide.with(MainActivity.this)
                         .load("https://openweathermap.org/img/wn/" + iconNumber +"@2x.png")

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,12 +40,16 @@ public class SearchNameActivity extends AppCompatActivity {
                     return;
                 }else {
                     getWeatherData(citySearched);
+                    searchEditText.setText("");
                 }
             }
         });
 
     }
 
+    /**
+     * init the data by the data for the current location
+     * **/
     private void receiveData() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -58,7 +63,8 @@ public class SearchNameActivity extends AppCompatActivity {
                 humidity.setText(String.valueOf(openWeather.getMain().getHumidity()) + "%");
                 maxTemp.setText(String.valueOf(openWeather.getMain().getTempMax()) + "°C");
                 minTemp.setText(String.valueOf(openWeather.getMain().getTempMin()) + "°C");
-                windSpeed.setText(String.valueOf(openWeather.getWind().getSpeed()));
+                windSpeed.setText(String.valueOf(openWeather.getWind().getSpeed()) + " km/h");
+                pressure.setText(String.valueOf(openWeather.getMain().getPressure()) + " mbar");
                 String iconNumber = openWeather.getWeather().get(0).getIcon();
                 Glide.with(SearchNameActivity.this)
                         .load("https://openweathermap.org/img/wn/" + iconNumber + "@2x.png")
@@ -73,18 +79,21 @@ public class SearchNameActivity extends AppCompatActivity {
         list.enqueue(new Callback<OpenWeather>() {
             @Override
             public void onResponse(Call<OpenWeather> call, Response<OpenWeather> response) {
-                if (response != null) {
+                if (response.isSuccessful()) {
                     city.setText(response.body().getName() + " ," + response.body().getSys().getCountry());
                     weatherDegree.setText(String.valueOf(response.body().getMain().getTemp()) + "°C");
                     weatherDescription.setText(String.valueOf(response.body().getWeather().get(0).getDescription()));
                     humidity.setText(String.valueOf(response.body().getMain().getHumidity()) + "%");
                     maxTemp.setText(String.valueOf(response.body().getMain().getTempMax()) + "°C");
                     minTemp.setText(String.valueOf(response.body().getMain().getTempMin()) + "°C");
-                    windSpeed.setText(String.valueOf(response.body().getWind().getSpeed()));
+                    windSpeed.setText(String.valueOf(response.body().getWind().getSpeed()) + " km/h");
+                    pressure.setText(String.valueOf(response.body().getMain().getPressure()) + " mbar");
                     String iconNumber = response.body().getWeather().get(0).getIcon();
                     Glide.with(SearchNameActivity.this)
                             .load("https://openweathermap.org/img/wn/" + iconNumber + "@2x.png")
                             .into(weatherIcon);
+                }else {
+                    Toast.makeText(SearchNameActivity.this, "we can't get the city name please try again", Toast.LENGTH_SHORT).show();
                 }
             }
 

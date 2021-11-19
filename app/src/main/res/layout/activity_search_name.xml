@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:padding="10dp"
         android:gravity="center"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="20dp">
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:id="@+id/searchWeatherIcon"
-            android:src="@color/black"
             android:contentDescription="@string/iconweather" />
         <LinearLayout
             android:layout_width="wrap_content"
@@ -87,128 +86,124 @@
         android:textColor="@color/white"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/humidity"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/darkBlue"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/humidity"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_marginTop="20dp"
-            android:id="@+id/searchHumidityValue"
-            android:layout_marginStart="30dp"
-            android:gravity="right"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/max_temp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/darkBlue"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/max_temp"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_marginTop="20dp"
-            android:id="@+id/searchMax_tempValue"
-            android:layout_marginStart="30dp"/>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/min_temp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/darkBlue"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/min_temp"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_marginTop="20dp"
-            android:id="@+id/searchMin_tempValue"
-            android:layout_marginStart="30dp" />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pressure"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/darkBlue"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/max_temp"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_marginTop="20dp"
-            android:id="@+id/searchPressure"
-            android:layout_marginStart="30dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+            android:orientation="vertical">
 
-        <TextView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/humidity"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkBlue"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/max_temp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkBlue"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min_temp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkBlue"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pressure"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkBlue"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wind_speed"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkBlue"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/wind_speed"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/darkBlue"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/wind_speed"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_marginTop="20dp"
-            android:id="@+id/searchWindSpeedValue"
-            android:layout_marginStart="30dp"/>
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/humidity"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"
+                android:id="@+id/searchHumidityValue"
+                android:layout_marginStart="30dp"
+                android:gravity="right"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/max_temp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"
+                android:id="@+id/searchMax_tempValue"
+                android:layout_marginStart="30dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/min_temp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"
+                android:id="@+id/searchMin_tempValue"
+                android:layout_marginStart="30dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/max_temp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"
+                android:id="@+id/searchPressure"
+                android:layout_marginStart="30dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wind_speed"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"
+                android:id="@+id/searchWindSpeedValue"
+                android:layout_marginStart="30dp"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
