@@ -1,8 +1,5 @@
 package com.example.weatherapp;
 
-import static com.example.weatherapp.MainActivity.SEND_INTENT;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,7 +11,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +30,7 @@ public class SearchNameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_name);
         initViews();
-        receiveData();
+        //receiveData();
         searchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +49,7 @@ public class SearchNameActivity extends AppCompatActivity {
 
     /**
      * init the data by the data for the current location
-     * **/
+     *
     private void receiveData() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -71,6 +71,34 @@ public class SearchNameActivity extends AppCompatActivity {
                         .into(weatherIcon);
             }
         }
+    }**/
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(OpenWeather openWeather) {
+        city.setText(openWeather.getName() + " ," + openWeather.getSys().getCountry());
+        weatherDegree.setText(String.valueOf(openWeather.getMain().getTemp()) + "°C");
+        weatherDescription.setText(String.valueOf(openWeather.getWeather().get(0).getDescription()));
+        humidity.setText(String.valueOf(openWeather.getMain().getHumidity()) + "%");
+        maxTemp.setText(String.valueOf(openWeather.getMain().getTempMax()) + "°C");
+        minTemp.setText(String.valueOf(openWeather.getMain().getTempMin()) + "°C");
+        windSpeed.setText(String.valueOf(openWeather.getWind().getSpeed()) + " km/h");
+        pressure.setText(String.valueOf(openWeather.getMain().getPressure()) + " mbar");
+        String iconNumber = openWeather.getWeather().get(0).getIcon();
+        Glide.with(SearchNameActivity.this)
+                .load("https://openweathermap.org/img/wn/" + iconNumber + "@2x.png")
+                .into(weatherIcon);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     private void getWeatherData(String cityName) {

@@ -21,6 +21,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 String data = gson.toJson(sendResponse);
                 intent.putExtra(SEND_INTENT, data);
+                EventBus.getDefault().postSticky(sendResponse);
                 startActivity(intent);
+
             }
         });
         /**
